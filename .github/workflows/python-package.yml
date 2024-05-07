@@ -43,6 +43,7 @@ jobs:
     - name: Build Docker Container
       run: |
         docker build -t isaacsql .
+        docker run -it isaacsql
     - name: Build Executable
       run: |
         pip install pyinstaller
