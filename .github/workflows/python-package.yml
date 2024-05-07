@@ -43,11 +43,13 @@ jobs:
     - name: Build Docker Container
       run: |
         docker build -t isaacsql .
-        docker run -it isaacsql
-    - name: Build Executable
+    - name: Push Docker image to Docker Hub
       run: |
-        pip install pyinstaller
-        pyinstaller --onefile main.py
+          docker push pogo0123/isaacsql:latest
+    # - name: Build Executable
+    #   run: |
+    #     pip install pyinstaller
+    #     pyinstaller --onefile main.py
     - name: Upload Executable
       uses: actions/upload-artifact@v2
       with:
