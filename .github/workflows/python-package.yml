@@ -40,3 +40,6 @@ jobs:
       run: |
         coverage run -m unittest discover -s tests
         coverage report
+    - name: Build Docker Container
+      run: |
+        docker build -t isaacsql .
