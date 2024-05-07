@@ -29,7 +29,6 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest
         pip install coverage
-        pip install pyinstaller
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
@@ -46,6 +45,8 @@ jobs:
         docker build -t isaacsql .
     - name: Build Executable
       run: |
+        cd dist
+        pip install pyinstaller
         pyinstaller --onefile main.py
     - name: Upload Executable
       uses: actions/upload-artifact@v2
