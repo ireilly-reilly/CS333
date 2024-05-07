@@ -45,7 +45,6 @@ jobs:
         docker build -t isaacsql .
     - name: Build Executable
       run: |
-        cd dist
         pip install pyinstaller
         pyinstaller --onefile main.py
     - name: Upload Executable
