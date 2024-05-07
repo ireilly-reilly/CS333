@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from ..selections import selectAll
+import selections
 
 class TestSelections(unittest.TestCase):
 
@@ -10,7 +10,7 @@ class TestSelections(unittest.TestCase):
         with patch('selections.tablefunctions.findtable', return_value=True):
             with patch('builtins.open', unittest.mock.mock_open(read_data='column1 | column2\nvalue1 | value2\n')):
                 with patch('builtins.print') as mocked_print:
-                    selectAll('test_table', 'test_db')
+                    selections.selectAll('test_table', 'test_db')
                     mocked_print.assert_called_with('column1 | column2\nvalue1 | value2\n')
 
     #table doesn't exist
@@ -18,7 +18,7 @@ class TestSelections(unittest.TestCase):
         #Mocking tablefunctions.findtable to return False (table does not exist)
         with patch('selections.tablefunctions.findtable', return_value=False):
             with patch('builtins.print') as mocked_print:
-                selectAll('non_existing_table', 'test_db')
+                selections.selectAll('non_existing_table', 'test_db')
                 mocked_print.assert_called_with('!Failed to query table non_existing_table because it does not exist.')
 
 if __name__ == '__main__':

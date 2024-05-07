@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 import io
-from ..main import parse_input  # Import your main script to be tested
+import main  # Import your main script to be tested
 import os
 import shutil
 import dbfunctions
@@ -18,7 +18,7 @@ class TestParseInput(unittest.TestCase):
         captured_output = io.StringIO()
         expected_output = f"Database test_db created.\n"
         with patch('sys.stdout', new=captured_output):
-            parse_input(user_input)
+            main.parse_input(user_input)
             self.assertEqual(captured_output.getvalue(), expected_output)
         shutil.rmtree(test_db)
 
@@ -28,21 +28,21 @@ class TestParseInput(unittest.TestCase):
         captured_output = io.StringIO()
         expected_output = "Invalid command, all commands must end with ';'\n"
         with patch('sys.stdout', new=captured_output):
-            parse_input(user_input)
+            main.parse_input(user_input)
             self.assertEqual(captured_output.getvalue(), expected_output)
 
     #Test for SELECT command (Integration test that builds database, table, and fails to read entries)
     def test_parse_select_invalid_table(self):
         test_db = 'test_db'
         user_input = "CREATE DATABASE test_db;"
-        parse_input(user_input)
+        main.parse_input(user_input)
         user_input = "USE test_db;"
-        parse_input(user_input)
+        main.parse_input(user_input)
         user_input = "SELECT * FROM test_table;"
         captured_output = io.StringIO()
         expected_output = "!Failed to query table test_table because it does not exist.\n"
         with patch('sys.stdout', new=captured_output):
-            parse_input(user_input)
+            main.parse_input(user_input)
             # Assert that the expected function is called (not testing the function's content here)
             self.assertEqual(captured_output.getvalue(), expected_output)
         #shutil.rmtree(test_db)
@@ -51,16 +51,17 @@ class TestParseInput(unittest.TestCase):
     def test_parse_insert_data_into_table(self):
         test_db = 'test_db'
         user_input = "CREATE DATABASE test_db;"
-        parse_input(user_input)
+        main.parse_input(user_input)
         user_input = "USE test_db;"
-        parse_input(user_input)
+        main.parse_input(user_input)
         user_input = 'CREATE TABLE Product(pid int, name varchar(20), price float);'
-        parse_input(user_input)
+        main.parse_input(user_input)
         user_input = "INSERT INTO Product values(1, 'Gizmo', 19.99);"
         captured_output = io.StringIO()
         expected_output = "1 new record inserted.\n"
         with patch('sys.stdout', new=captured_output):
-            parse_input(user_input)
+            main.parse_input(user_input)
+            # Assert that the expected function is called (not testing the function's content here)
             self.assertEqual(captured_output.getvalue(), expected_output)
         shutil.rmtree(test_db)
 
@@ -68,14 +69,16 @@ class TestParseInput(unittest.TestCase):
     def test_parse_insert_into_invalid_table(self):
         test_db = 'test_db'
         user_input = "CREATE DATABASE test_db;"
-        parse_input(user_input)
+        main.parse_input(user_input)
         user_input = "USE test_db;"
-        parse_input(user_input)
+        main.parse_input(user_input)
+        # user_input = 'CREATE TABLE Product(pid int, name varchar(20), price float);'
+        # main.parse_input(user_input)
         user_input = "INSERT INTO Product values(1, 'Gizmo', 19.99);"
         captured_output = io.StringIO()
         expected_output = "!Failed to insert data into Product because it does not exist.\n"
         with patch('sys.stdout', new=captured_output):
-            parse_input(user_input)
+            main.parse_input(user_input)
             self.assertEqual(captured_output.getvalue(), expected_output)
         shutil.rmtree(test_db)
 
@@ -83,14 +86,14 @@ class TestParseInput(unittest.TestCase):
     def test_parse_delete_invalid_table(self):
         test_db = 'test_db'
         user_input = "CREATE DATABASE test_db;"
-        parse_input(user_input)
+        main.parse_input(user_input)
         user_input = "USE test_db;"
-        parse_input(user_input)
+        main.parse_input(user_input)
         user_input = "DROP TABLE invalid_table;"
         captured_output = io.StringIO()
         expected_output = "!Failed to delete invalid_table because it does not exist.\n"
         with patch('sys.stdout', new=captured_output):
-            parse_input(user_input)
+            main.parse_input(user_input)
             self.assertEqual(captured_output.getvalue(), expected_output)
         shutil.rmtree(test_db)
 
@@ -98,18 +101,18 @@ class TestParseInput(unittest.TestCase):
     def test_parse_delete_valid_table(self):
         test_db = 'test_db'
         user_input = "CREATE DATABASE test_db;"
-        parse_input(user_input)
+        main.parse_input(user_input)
         user_input = "USE test_db;"
-        parse_input(user_input)
+        main.parse_input(user_input)
         user_input = 'CREATE TABLE Product(pid int, name varchar(20), price float);'
-        parse_input(user_input)
+        main.parse_input(user_input)
         user_input = "INSERT INTO Product values(1, 'Gizmo', 19.99);"
-        parse_input(user_input)
+        main.parse_input(user_input)
         user_input = "DROP TABLE Product;"
         captured_output = io.StringIO()
         expected_output = "Table Product deleted.\n"
         with patch('sys.stdout', new=captured_output):
-            parse_input(user_input)
+            main.parse_input(user_input)
             self.assertEqual(captured_output.getvalue(), expected_output)
         shutil.rmtree(test_db)
 
@@ -119,7 +122,7 @@ class TestParseInput(unittest.TestCase):
         captured_output = io.StringIO()
         expected_output = "Unable to use database non_existent_db because it does not exist.\n"
         with patch('sys.stdout', new=captured_output):
-            parse_input(user_input)
+            main.parse_input(user_input)
             self.assertEqual(captured_output.getvalue(), expected_output)
 
     
