@@ -1,7 +1,7 @@
 import unittest
 import os
 import shutil
-from tablefunctions import findtable, createTable, dropTable, insertData
+from ..tablefunctions import findtable, createTable, dropTable, insertData
 
 class TestTableFunctions(unittest.TestCase):
 

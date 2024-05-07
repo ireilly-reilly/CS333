@@ -3,7 +3,7 @@ import os
 import shutil
 import subprocess
 from unittest.mock import patch
-from dbfunctions import create_db, remove_db, finddb, getOperand
+from ..dbfunctions import create_db, remove_db, finddb, getOperand
 
 class TestDBFunctions(unittest.TestCase):
 
