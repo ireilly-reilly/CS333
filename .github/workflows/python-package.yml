@@ -42,7 +42,7 @@ jobs:
         coverage report
     - name: Build Docker Container
       run: |
-        docker build -t isaacsql .
+        docker build -t pogo0123/isaacsql:latest .
     - name: Push Docker image to Docker Hub
       run: |
           docker push pogo0123/isaacsql:latest
