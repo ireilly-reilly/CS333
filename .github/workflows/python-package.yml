@@ -29,7 +29,6 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest
         pip install coverage
-        pip install pyinstaller
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
@@ -43,12 +42,8 @@ jobs:
         coverage report
     - name: Build Docker Container
       run: |
-        docker build -t isaacsql .
-    - name: Build Executable
+        docker build -t pogo0123/isaacsql:latest .
+    - name: Push Docker image to Docker Hub
       run: |
-        pyinstaller --onefile main.py
-    - name: Upload Executable
-      uses: actions/upload-artifact@v2
-      with:
-        name: IsaacSQL
-        path: /isaacsql/dist
+          echo "${{ secrets.DOCKER_PAT }}" | docker login --username pogo0123 --password-stdin
+          docker push pogo0123/isaacsql:latest
