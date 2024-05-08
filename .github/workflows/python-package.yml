@@ -45,6 +45,7 @@ jobs:
         docker build -t pogo0123/isaacsql:latest .
     - name: Push Docker image to Docker Hub
       run: |
+          echo "${{ secrets.DOCKER_PAT }}" | docker login --username pogo0123 --password-stdin
           docker push pogo0123/isaacsql:latest
     # - name: Build Executable
     #   run: |
