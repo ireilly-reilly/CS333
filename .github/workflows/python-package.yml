@@ -42,17 +42,8 @@ jobs:
         coverage report
     - name: Build Docker Container
       run: |
-        docker build -t pogo0123/isaacsql:latest .
+        docker build -t isaacsql:latest .
     - name: Push Docker image to Docker Hub
       run: |
           echo "${{ secrets.DOCKER_PAT }}" | docker login --username pogo0123 --password-stdin
-          docker push pogo0123/isaacsql:latest
-    # - name: Build Executable
-    #   run: |
-    #     pip install pyinstaller
-    #     pyinstaller --onefile main.py
-    - name: Upload Executable
-      uses: actions/upload-artifact@v2
-      with:
-        name: IsaacSQL
-        path: /dist
+          docker push isaacsql:latest
