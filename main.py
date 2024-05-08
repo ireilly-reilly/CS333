@@ -65,6 +65,9 @@ def parse_input(user_input):
         print("Bye!")
         quit()
 
+    else:
+        print("Not a valid IsaacSQL command.")
+
 
 
 def get_user_input(user_input):   
