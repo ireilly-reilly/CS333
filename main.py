@@ -49,10 +49,10 @@ def parse_input(user_input):
         tableName = user_input[11:-1]
         tablefunctions.dropTable(tableName, currentdb)
 
-    # #Selects data from a user specified table and prints contents to terminal 
-    # elif "SELECT * FROM" in user_input.upper():
-    #     tableName = user_input[14:-1]
-    #     selections.selectAll(tableName, currentdb)
+    #Selects data from a user specified table and prints contents to terminal 
+    elif "SELECT * FROM" in user_input.upper():
+        tableName = user_input[14:-1]
+        selections.selectAll(tableName, currentdb)
 
     #Inserts given data into a specified table
     elif "INSERT INTO" in user_input.upper():
