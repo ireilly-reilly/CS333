@@ -42,7 +42,7 @@ jobs:
         coverage report
     - name: Build Docker Container
       run: |
-        docker build -t isaacsql:latest .
+        docker build -t pogo0123/isaacsql:latest .
     - name: Push Docker image to Docker Hub
       run: |
           echo "${{ secrets.DOCKER_PAT }}" | docker login --username pogo0123 --password-stdin
